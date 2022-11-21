@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {roles} =require('./roles')
 const userSchema =new mongoose.Schema({
     username:{
         type:String,
@@ -13,6 +14,11 @@ const userSchema =new mongoose.Schema({
     password:{
         type:String,
         required:true
+    },
+    roles :{
+        type : String,
+        enum : [roles.admin, roles.user],
+        default:roles.user 
     }
 })
 
