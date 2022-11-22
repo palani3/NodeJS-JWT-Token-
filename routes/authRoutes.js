@@ -22,6 +22,8 @@ authRoutes.post('/signup',async(req,res)=>{
 
 authRoutes.post("/signin",async (req,res)=>{
     const existingUser = await User.findOne({email:req.body.email});
+    const existingUsers = await User.findOne({roles:req.body.roles});
+
     if(!existingUser)
     {
         res.send("No user Found or Email  Is Invalid");
@@ -39,7 +41,7 @@ authRoutes.post("/signin",async (req,res)=>{
         else
         {
             //res.send("login success");     
-            const token = await tokenGenerator(existingUser.email);
+            const token = await tokenGenerator(existingUser.email,existingUsers.roles);
             res.cookie("jwt",token);
             res.send(token);     
 
